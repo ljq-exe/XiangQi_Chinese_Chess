@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Validate game and engine
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check JavaScript syntax
+        run: |
+          for file in *.js; do
+            node --check "$file"
+          done
+
+      - name: Run regression tests
+        run: node test.js
+
+      - name: Run perft tests
+        run: node perft.js
+
+      - name: Cross-check game rules
+        run: node crosscheck.js
+
+      - name: Run UI smoke test
+        run: node smoke.js
+
+      - name: Run evaluation symmetry test
+        run: node sym.js
+
+      - name: Run Zobrist hash test
+        run: node zob.js

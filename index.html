@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cờ Tướng — Xiangqi</title>
+<link rel="stylesheet" href="cotuong.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 data-i18n="title">CỜ TƯỚNG</h1>
+    <p data-i18n="subtitle">XIANGQI · CHƠI VỚI MÁY</p>
+  </header>
+
+  <div class="top-actions">
+    <button id="btnLanguage" class="dark" type="button" aria-label="Switch language">English</button>
+    <button id="btnWiki" class="dark" type="button" aria-expanded="false" aria-controls="wikiPanel">📖 Wiki · Luật chơi</button>
+  </div>
+
+  <section class="wiki-panel" id="wikiPanel" aria-hidden="true">
+    <div class="wiki-heading">
+      <h2 id="wikiTitle" tabindex="-1">Luật và cách đi quân</h2>
+      <button id="btnWikiClose" class="wiki-close" type="button" aria-label="Đóng wiki">×</button>
+    </div>
+    <div id="wikiContent"></div>
+  </section>
+
+  <div class="board-area">
+    <div class="board" id="board">
+      <svg class="lines" viewBox="0 0 9 10" preserveAspectRatio="none">
+        <defs>
+          <clipPath id="board-intersections" clipPathUnits="userSpaceOnUse">
+            <rect x="0.5" y="0.5" width="8" height="9"/>
+          </clipPath>
+        </defs>
+        <g stroke="#7a4a12" stroke-width="0.055" fill="none" vector-effect="non-scaling-stroke">
+          <path d="M0.5 0.5 H8.5 M0.5 1.5 H8.5 M0.5 2.5 H8.5 M0.5 3.5 H8.5 M0.5 4.5 H8.5 M0.5 5.5 H8.5 M0.5 6.5 H8.5 M0.5 7.5 H8.5 M0.5 8.5 H8.5 M0.5 9.5 H8.5"/>
+          <path d="M0.5 0.5 V9.5 M8.5 0.5 V9.5"/>
+          <path d="M1.5 0.5 V4.5 M1.5 5.5 V9.5 M2.5 0.5 V4.5 M2.5 5.5 V9.5 M3.5 0.5 V4.5 M3.5 5.5 V9.5 M4.5 0.5 V4.5 M4.5 5.5 V9.5 M5.5 0.5 V4.5 M5.5 5.5 V9.5 M6.5 0.5 V4.5 M6.5 5.5 V9.5 M7.5 0.5 V4.5 M7.5 5.5 V9.5"/>
+          <path d="M3.5 0.5 L5.5 2.5 M5.5 0.5 L3.5 2.5 M3.5 9.5 L5.5 7.5 M5.5 9.5 L3.5 7.5"/>
+        </g>
+        <g id="marks" clip-path="url(#board-intersections)" fill="none" stroke="#7a4a12" stroke-width="0.06"
+           stroke-linecap="round" opacity=".9" pointer-events="none"></g>
+      </svg>
+      <div class="pieces" id="pieces"></div>
+      <div class="river-label"><span>楚 河</span><span>漢 界</span></div>
+    </div>
+  </div>
+
+  <div class="status">
+    <span class="dot red" id="turnDot"></span>
+    <b id="turnText" data-i18n="redStarts">Đỏ đi trước</b>
+    <span class="warn" id="warn"></span>
+  </div>
+
+  <div class="bar">
+    <button id="btnUndo" class="dark" data-i18n="undo">↶ Đi lại</button>
+    <button id="btnFlip" class="dark" data-i18n="flip">⇅ Lật bàn</button>
+    <button id="btnHint" data-i18n="hint">💡 Gợi ý</button>
+    <button id="btnNew" data-i18n="newGame">Ván mới</button>
+  </div>
+
+  <div class="bot-row">
+    <button id="btnBot" class="off">🤖 Đấu với máy</button>
+    <select id="selSide" title="Bạn đóng vai quân nào">
+      <option value="r" data-i18n="playerRed">Bạn: Đỏ</option>
+      <option value="b" data-i18n="playerBlack">Bạn: Đen</option>
+    </select>
+    <select id="selLevel" title="Độ khó của máy (15 mức)"></select>
+  </div>
+
+  <div class="moves">
+    <h3 data-i18n="moveHistory">LỊCH SỬ NƯỚC ĐI</h3>
+    <div id="moveList">—</div>
+  </div>
+
+  <div class="rules">
+    <span data-i18n="quickHelp">Chọn quân để xem nước đi hợp lệ. Mở Wiki để đọc luật và cách di chuyển.</span>
+  </div>
+</div>
+
+<div class="level-up-modal" id="levelBoostModal" aria-hidden="true">
+  <div class="level-up-card">
+    <div class="level-up-title" data-i18n="boostTitle">Tăng độ khó?</div>
+    <div class="level-up-text" data-i18n="boostText">Người chơi đã thắng. Bạn có muốn tăng độ khó của máy lên 1 mức không?</div>
+    <div class="level-up-actions">
+      <button id="btnBoostLevelYes" class="primary" data-i18n="boostYes">Có, tăng lên</button>
+      <button id="btnBoostLevelNo" class="secondary" data-i18n="no">Không</button>
+    </div>
+  </div>
+</div>
+
+<script src="engine.js"></script>
+<script src="game.js"></script>
+
+</body>
+</html>
